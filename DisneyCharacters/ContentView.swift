@@ -9,20 +9,50 @@ import SwiftUI
 
 struct ContentView: View {
     
-    @StateObject private var viewModel = DisneyCharactersViewModel()
+    @EnvironmentObject var mainViewModel: DisneyCharactersViewModel
     
     var body: some View {
         NavigationStack {
             VStack {
                 List {
-                    ForEach(viewModel.characters, id:\._id) {
-                        CharacterRowView(character: $0)
+                    if mainViewModel.favouriteCharacters.count > 0 {
+                        Section("Favourites") {
+                            FavouriteView()
+                        }
+                    }
+                    
+                    Section("Characters") {
+                        ForEach(mainViewModel.characters, id:\._id) { character in
+                            NavigationLink(value: character) {
+                                CharacterRowView(character: character)
+                            }
+                            .swipeActions(edge: .trailing, allowsFullSwipe: /*@START_MENU_TOKEN@*/true/*@END_MENU_TOKEN@*/) {
+                                if mainViewModel.isFavourite(character) {
+                                    Button("Remove from Favourites") {
+                                        mainViewModel.removeFromFavourite(character)
+                                    }
+                                    .tint(.red)
+                                } else {
+                                    Button("Add to Favourites") {
+                                        mainViewModel.addToFavourite(character)
+                                    }
+                                    .tint(.yellow)
+                                }
+                                
+                            }
+                        }
+                        
                     }
                 }
                 .listStyle(.inset)
+                .navigationDestination(for: Character.self) { item in
+                    CharacterDetailView(character: item)
+                }
                 .task {
+                    
+                    mainViewModel.loadSaveData()
                     do {
-                        try await viewModel.getListOfCharacters(page: 1)
+                        try await mainViewModel.getListOfCharacters()
                     }
                     catch {
                         print(error)
@@ -38,4 +68,5 @@ struct ContentView: View {
 
 #Preview {
     ContentView()
+        .environmentObject(DisneyCharactersViewModel())
 }
