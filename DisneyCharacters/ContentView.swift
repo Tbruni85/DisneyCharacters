@@ -8,14 +8,31 @@
 import SwiftUI
 
 struct ContentView: View {
+    
+    @StateObject private var viewModel = DisneyCharactersViewModel()
+    
     var body: some View {
-        VStack {
-            Image(systemName: "globe")
-                .imageScale(.large)
-                .foregroundStyle(.tint)
-            Text("Hello, world!")
+        NavigationStack {
+            VStack {
+                List {
+                    ForEach(viewModel.characters, id:\._id) {
+                        CharacterRowView(character: $0)
+                    }
+                }
+                .listStyle(.inset)
+                .task {
+                    do {
+                        try await viewModel.getListOfCharacters(page: 1)
+                    }
+                    catch {
+                        print(error)
+                    }
+                    
+                }
+            }
+            .navigationTitle("Disney characters")
         }
-        .padding()
+        
     }
 }
 
