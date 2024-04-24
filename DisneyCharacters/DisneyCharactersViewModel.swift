@@ -15,10 +15,17 @@ class DisneyCharactersViewModel: ObservableObject {
     
     @Published var characters: [Character] = []
     @Published var favouriteCharacters: [Character] = []
+    @Published var filterType: FilterType = .alphabetical
+    var mainViewDidLoad = false
     private var currentPage = 1
     
     private let savePath = URL.documentsDirectory.appending(path: "FavouriteCharacters")
     private let interactor: InteractorProviding
+    
+    enum FilterType: String, CaseIterable {
+        case alphabetical
+        case popularity
+    }
     
     init(interactor: InteractorProviding = Interactor()) {
         self.interactor = interactor
@@ -29,12 +36,33 @@ class DisneyCharactersViewModel: ObservableObject {
         do {
             let response: CharacterList = try await interactor.getListOfCharacters(page: currentPage, pageSize: Constants.pageSize)
             characters = response.data
+            sortBy(filter: filterType)
         }
         catch {
             print(error)
             characters = []
         }
     }
+    
+    func sortBy(filter: FilterType) {
+        switch filter {
+        case .alphabetical:
+            characters.sort {
+                $0.name < $1.name
+            }
+        case .popularity:
+            characters.sort {
+                if  $0.films.count == $1.films.count {
+                    return $0.shortFilms.count > $1.shortFilms.count
+                }
+                return $0.films.count > $1.films.count
+            }
+        }
+    }
+}
+
+// MARK: Favourite logic handler
+extension DisneyCharactersViewModel {
     
     func isFavourite(_ character: Character) -> Bool {
         favouriteCharacters.contains {
@@ -54,6 +82,10 @@ class DisneyCharactersViewModel: ObservableObject {
         favouriteCharacters.remove(at: index)
         save()
     }
+}
+
+// MARK: Save / Load functions
+extension DisneyCharactersViewModel {
     
     private func save() {
         do {

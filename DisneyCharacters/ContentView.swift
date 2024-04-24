@@ -14,19 +14,26 @@ struct ContentView: View {
     var body: some View {
         NavigationStack {
             VStack {
-                List {
-                    if mainViewModel.favouriteCharacters.count > 0 {
-                        Section("Favourites") {
-                            FavouriteView()
-                        }
+                if mainViewModel.favouriteCharacters.count > 0 {
+                    FavouriteView()
+                }
+                Picker("Character filter", selection: $mainViewModel.filterType) {
+                    ForEach(DisneyCharactersViewModel.FilterType.allCases, id: \.self) {
+                        Text("\($0)")
                     }
-                    
+                }
+                .pickerStyle(.segmented)
+                .onChange(of: mainViewModel.filterType) {
+                    mainViewModel.sortBy(filter: $1)
+                }
+                
+                List {
                     Section("Characters") {
                         ForEach(mainViewModel.characters, id:\._id) { character in
                             NavigationLink(value: character) {
                                 CharacterRowView(character: character)
                             }
-                            .swipeActions(edge: .trailing, allowsFullSwipe: /*@START_MENU_TOKEN@*/true/*@END_MENU_TOKEN@*/) {
+                            .swipeActions(edge: .trailing, allowsFullSwipe: true) {
                                 if mainViewModel.isFavourite(character) {
                                     Button("Remove from Favourites") {
                                         mainViewModel.removeFromFavourite(character)
@@ -49,13 +56,15 @@ struct ContentView: View {
                     CharacterDetailView(character: item)
                 }
                 .task {
-                    
-                    mainViewModel.loadSaveData()
-                    do {
-                        try await mainViewModel.getListOfCharacters()
-                    }
-                    catch {
-                        print(error)
+                    if !mainViewModel.mainViewDidLoad {
+                        mainViewModel.loadSaveData()
+                        do {
+                            try await mainViewModel.getListOfCharacters()
+                        }
+                        catch {
+                            print(error)
+                        }
+                        mainViewModel.mainViewDidLoad = true
                     }
                     
                 }
