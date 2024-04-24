@@ -9,7 +9,7 @@ import SwiftUI
 
 struct CharacterDetailView: View {
     
-    @EnvironmentObject var mainViewModel: DisneyCharactersViewModel
+    @EnvironmentObject var mainViewModel: DisneyCharactersMainViewModel
     @StateObject private var viewModel = DetailViewModel()
     
     let character: Character
@@ -118,5 +118,5 @@ struct CharacterDetailView: View {
 
 #Preview {
     CharacterDetailView(character: Character.example)
-        .environmentObject(DisneyCharactersViewModel())
+        .environmentObject(DisneyCharactersMainViewModel())
 }

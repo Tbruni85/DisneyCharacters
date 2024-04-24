@@ -14,13 +14,13 @@
 		40422EB62BD9088900EE9B37 /* DisneyCharactersTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 40422EB52BD9088900EE9B37 /* DisneyCharactersTests.swift */; };
 		40422ED02BD90A9D00EE9B37 /* Character.swift in Sources */ = {isa = PBXBuildFile; fileRef = 40422ECF2BD90A9D00EE9B37 /* Character.swift */; };
 		40422ED22BD90B6C00EE9B37 /* Interactor.swift in Sources */ = {isa = PBXBuildFile; fileRef = 40422ED12BD90B6C00EE9B37 /* Interactor.swift */; };
-		40422ED42BD90FD800EE9B37 /* DisneyCharactersViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 40422ED32BD90FD800EE9B37 /* DisneyCharactersViewModel.swift */; };
+		40422ED42BD90FD800EE9B37 /* DisneyCharactersMainViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 40422ED32BD90FD800EE9B37 /* DisneyCharactersMainViewModel.swift */; };
 		4042E1382BD91315002462D3 /* CharacterRowView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4042E1372BD91315002462D3 /* CharacterRowView.swift */; };
-		4042E13A2BD91DC4002462D3 /* CharacterDetailView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4042E1392BD91DC4002462D3 /* CharacterDetailView.swift */; };
 		4042E13C2BD9202C002462D3 /* WebView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4042E13B2BD9202C002462D3 /* WebView.swift */; };
 		4042E13F2BD93F3B002462D3 /* DetailViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4042E13E2BD93F3B002462D3 /* DetailViewModel.swift */; };
 		407765062BD944D600E0020E /* FavouriteView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 407765052BD944D600E0020E /* FavouriteView.swift */; };
 		407765092BD9453C00E0020E /* RemoteImage.swift in Sources */ = {isa = PBXBuildFile; fileRef = 407765082BD9453C00E0020E /* RemoteImage.swift */; };
+		4077650D2BD9AB1A00E0020E /* CharacterDetailView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4077650C2BD9AB1A00E0020E /* CharacterDetailView.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -43,13 +43,13 @@
 		40422EB52BD9088900EE9B37 /* DisneyCharactersTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DisneyCharactersTests.swift; sourceTree = "<group>"; };
 		40422ECF2BD90A9D00EE9B37 /* Character.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Character.swift; sourceTree = "<group>"; };
 		40422ED12BD90B6C00EE9B37 /* Interactor.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Interactor.swift; sourceTree = "<group>"; };
-		40422ED32BD90FD800EE9B37 /* DisneyCharactersViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DisneyCharactersViewModel.swift; sourceTree = "<group>"; };
+		40422ED32BD90FD800EE9B37 /* DisneyCharactersMainViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DisneyCharactersMainViewModel.swift; sourceTree = "<group>"; };
 		4042E1372BD91315002462D3 /* CharacterRowView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CharacterRowView.swift; sourceTree = "<group>"; };
-		4042E1392BD91DC4002462D3 /* CharacterDetailView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CharacterDetailView.swift; sourceTree = "<group>"; };
 		4042E13B2BD9202C002462D3 /* WebView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WebView.swift; sourceTree = "<group>"; };
 		4042E13E2BD93F3B002462D3 /* DetailViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DetailViewModel.swift; sourceTree = "<group>"; };
 		407765052BD944D600E0020E /* FavouriteView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FavouriteView.swift; sourceTree = "<group>"; };
 		407765082BD9453C00E0020E /* RemoteImage.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RemoteImage.swift; sourceTree = "<group>"; };
+		4077650C2BD9AB1A00E0020E /* CharacterDetailView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CharacterDetailView.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -94,13 +94,9 @@
 				40422ECE2BD90A8B00EE9B37 /* Models */,
 				40422EA42BD9088800EE9B37 /* DisneyCharactersApp.swift */,
 				40422EA62BD9088800EE9B37 /* ContentView.swift */,
-				407765082BD9453C00E0020E /* RemoteImage.swift */,
-				407765072BD9452200E0020E /* FavouriteView */,
-				407765042BD944C600E0020E /* RowView */,
-				4042E13D2BD93F27002462D3 /* Detail view */,
-				4042E13B2BD9202C002462D3 /* WebView.swift */,
-				40422ED32BD90FD800EE9B37 /* DisneyCharactersViewModel.swift */,
 				40422ED12BD90B6C00EE9B37 /* Interactor.swift */,
+				4077650A2BD9A9F900E0020E /* ViewModel */,
+				4077650B2BD9AA0900E0020E /* Subviews */,
 				40422EA82BD9088900EE9B37 /* Assets.xcassets */,
 				40422EAA2BD9088900EE9B37 /* Preview Content */,
 			);
@@ -134,7 +130,7 @@
 		4042E13D2BD93F27002462D3 /* Detail view */ = {
 			isa = PBXGroup;
 			children = (
-				4042E1392BD91DC4002462D3 /* CharacterDetailView.swift */,
+				4077650C2BD9AB1A00E0020E /* CharacterDetailView.swift */,
 				4042E13E2BD93F3B002462D3 /* DetailViewModel.swift */,
 			);
 			path = "Detail view";
@@ -154,6 +150,26 @@
 				407765052BD944D600E0020E /* FavouriteView.swift */,
 			);
 			path = FavouriteView;
+			sourceTree = "<group>";
+		};
+		4077650A2BD9A9F900E0020E /* ViewModel */ = {
+			isa = PBXGroup;
+			children = (
+				40422ED32BD90FD800EE9B37 /* DisneyCharactersMainViewModel.swift */,
+			);
+			path = ViewModel;
+			sourceTree = "<group>";
+		};
+		4077650B2BD9AA0900E0020E /* Subviews */ = {
+			isa = PBXGroup;
+			children = (
+				4042E13B2BD9202C002462D3 /* WebView.swift */,
+				407765082BD9453C00E0020E /* RemoteImage.swift */,
+				407765072BD9452200E0020E /* FavouriteView */,
+				407765042BD944C600E0020E /* RowView */,
+				4042E13D2BD93F27002462D3 /* Detail view */,
+			);
+			path = Subviews;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -257,13 +273,13 @@
 			buildActionMask = 2147483647;
 			files = (
 				40422ED02BD90A9D00EE9B37 /* Character.swift in Sources */,
+				4077650D2BD9AB1A00E0020E /* CharacterDetailView.swift in Sources */,
 				4042E13C2BD9202C002462D3 /* WebView.swift in Sources */,
 				407765062BD944D600E0020E /* FavouriteView.swift in Sources */,
-				40422ED42BD90FD800EE9B37 /* DisneyCharactersViewModel.swift in Sources */,
+				40422ED42BD90FD800EE9B37 /* DisneyCharactersMainViewModel.swift in Sources */,
 				407765092BD9453C00E0020E /* RemoteImage.swift in Sources */,
 				40422EA72BD9088800EE9B37 /* ContentView.swift in Sources */,
 				4042E13F2BD93F3B002462D3 /* DetailViewModel.swift in Sources */,
-				4042E13A2BD91DC4002462D3 /* CharacterDetailView.swift in Sources */,
 				4042E1382BD91315002462D3 /* CharacterRowView.swift in Sources */,
 				40422ED22BD90B6C00EE9B37 /* Interactor.swift in Sources */,
 				40422EA52BD9088800EE9B37 /* DisneyCharactersApp.swift in Sources */,

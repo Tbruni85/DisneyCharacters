@@ -9,7 +9,7 @@ import SwiftUI
 
 struct ContentView: View {
     
-    @EnvironmentObject var mainViewModel: DisneyCharactersViewModel
+    @EnvironmentObject var mainViewModel: DisneyCharactersMainViewModel
     
     var body: some View {
         NavigationStack {
@@ -17,8 +17,13 @@ struct ContentView: View {
                 if mainViewModel.favouriteCharacters.count > 0 {
                     FavouriteView()
                 }
+                Text("Filter")
+                    .frame(maxWidth: .infinity, alignment: .leading)
+                    .font(.headline)
+                    .padding(.leading, 10)
+                        
                 Picker("Character filter", selection: $mainViewModel.filterType) {
-                    ForEach(DisneyCharactersViewModel.FilterType.allCases, id: \.self) {
+                    ForEach(DisneyCharactersMainViewModel.FilterType.allCases, id: \.self) {
                         Text("\($0)")
                     }
                 }
@@ -32,6 +37,9 @@ struct ContentView: View {
                         ForEach(mainViewModel.characters, id:\._id) { character in
                             NavigationLink(value: character) {
                                 CharacterRowView(character: character)
+                                    .task {
+                                        await mainViewModel.requestMoreCharacters(character)
+                                    }
                             }
                             .swipeActions(edge: .trailing, allowsFullSwipe: true) {
                                 if mainViewModel.isFavourite(character) {
@@ -45,7 +53,6 @@ struct ContentView: View {
                                     }
                                     .tint(.yellow)
                                 }
-                                
                             }
                         }
                         
@@ -77,5 +84,5 @@ struct ContentView: View {
 
 #Preview {
     ContentView()
-        .environmentObject(DisneyCharactersViewModel())
+        .environmentObject(DisneyCharactersMainViewModel())
 }

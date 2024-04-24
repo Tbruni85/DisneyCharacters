@@ -10,7 +10,7 @@ import SwiftUI
 @main
 struct DisneyCharactersApp: App {
     
-    @StateObject var mainViewModel = DisneyCharactersViewModel()
+    @StateObject var mainViewModel = DisneyCharactersMainViewModel()
     
     var body: some Scene {
         WindowGroup {

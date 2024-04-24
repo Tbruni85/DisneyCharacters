@@ -13,7 +13,7 @@ struct FavouriteView: View {
         static var maxHeigth: CGFloat = 100
         
     }
-    @EnvironmentObject var mainViewModel: DisneyCharactersViewModel
+    @EnvironmentObject var mainViewModel: DisneyCharactersMainViewModel
     
     var body: some View {
         VStack(alignment: .leading) {
@@ -32,12 +32,12 @@ struct FavouriteView: View {
             }
             .scrollClipDisabled()
         }
-        .frame(height: Constants.maxHeigth)
+        .frame(maxHeight: Constants.maxHeigth)
         .padding(.horizontal)
     }
 }
 
 #Preview {
     FavouriteView()
-        .environmentObject(DisneyCharactersViewModel())
+        .environmentObject(DisneyCharactersMainViewModel())
 }

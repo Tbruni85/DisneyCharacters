@@ -1,5 +1,5 @@
 //
-//  DisneyCharactersViewModel.swift
+//  DisneyCharactersMainViewModel.swift
 //  DisneyCharacters
 //
 //  Created by Tiziano Bruni on 24/04/2024.
@@ -7,10 +7,10 @@
 
 import Foundation
 
-class DisneyCharactersViewModel: ObservableObject {
+class DisneyCharactersMainViewModel: ObservableObject {
     
     private struct Constants {
-        static var pageSize = 60
+        static var pageSize = 50
     }
     
     @Published var characters: [Character] = []
@@ -33,14 +33,19 @@ class DisneyCharactersViewModel: ObservableObject {
     
     @MainActor
     func getListOfCharacters() async throws {
+        
         do {
             let response: CharacterList = try await interactor.getListOfCharacters(page: currentPage, pageSize: Constants.pageSize)
-            characters = response.data
+            if Task.isCancelled { return }
+            characters.append(contentsOf: response.data)
             sortBy(filter: filterType)
         }
         catch {
-            print(error)
-            characters = []
+            if Task.isCancelled {
+                print(error.localizedDescription)
+                currentPage -= 1
+                return
+            }
         }
     }
     
@@ -61,8 +66,27 @@ class DisneyCharactersViewModel: ObservableObject {
     }
 }
 
+// MARK: Pagination Logic
+extension DisneyCharactersMainViewModel {
+    
+    @MainActor
+    func requestMoreCharacters(_ element: Character) async {
+        if element._id == characters[characters.count - 20]._id {
+            currentPage += 1
+            do {
+                try await getListOfCharacters()
+                if Task.isCancelled { return }
+            }
+            catch {
+                print(error.localizedDescription)
+                if Task.isCancelled { return }
+            }
+        }
+    }
+}
+
 // MARK: Favourite logic handler
-extension DisneyCharactersViewModel {
+extension DisneyCharactersMainViewModel {
     
     func isFavourite(_ character: Character) -> Bool {
         favouriteCharacters.contains {
@@ -85,7 +109,7 @@ extension DisneyCharactersViewModel {
 }
 
 // MARK: Save / Load functions
-extension DisneyCharactersViewModel {
+extension DisneyCharactersMainViewModel {
     
     private func save() {
         do {
