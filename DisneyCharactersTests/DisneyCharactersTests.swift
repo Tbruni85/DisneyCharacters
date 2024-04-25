@@ -11,14 +11,16 @@ import XCTest
 final class DisneyCharactersTests: XCTestCase {
     
     var viewModel: DisneyCharactersMainViewModel!
-    var mockInteractor = MockedInteractor()
+    var mockInteractor: MockedInteractor!
     
     override func setUpWithError() throws {
+        mockInteractor = MockedInteractor()
         viewModel = DisneyCharactersMainViewModel(interactor: mockInteractor)
     }
     
     override func tearDownWithError() throws {
-        // Put teardown code here. This method is called after the invocation of each test method in the class.
+        viewModel = nil
+        mockInteractor = nil
     }
     
     func test_adding_to_favourites() throws {
@@ -40,8 +42,7 @@ final class DisneyCharactersTests: XCTestCase {
     func test_file_created_when_adding_to_favourites() throws {
         
         viewModel.addToFavourite(MockedData.mockCharacter)
-        let path = URL.documentsDirectory.appending(path: "FavouriteCharacters")
-        let data = try Data(contentsOf: path)
+        let data = try Data(contentsOf: viewModel.savePath)
         XCTAssertNotNil(data)
     }
     
@@ -110,14 +111,14 @@ final class DisneyCharactersTests: XCTestCase {
     }
     
     func test_request_more_data_success() async throws {
-        let expectedFullPageSize = 50
+    
         for _ in 0..<10 {
             viewModel.characters.append(MockedData.mockCharacter)
         }
         
         let elementsBeforeUpdate = viewModel.characters.count
         await viewModel.requestMoreCharacters(MockedData.mockCharacter)
-        XCTAssertEqual(viewModel.characters.count, elementsBeforeUpdate + expectedFullPageSize)
+        XCTAssertEqual(viewModel.characters.count, elementsBeforeUpdate + DisneyCharactersMainViewModel.Constants.pageSize)
     }
     
     func test_request_more_data_failure() async throws {

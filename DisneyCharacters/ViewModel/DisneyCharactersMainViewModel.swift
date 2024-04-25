@@ -9,7 +9,7 @@ import Foundation
 
 class DisneyCharactersMainViewModel: ObservableObject {
     
-    private struct Constants {
+    internal struct Constants {
         static var pageSize = 50
         static var pageThreshold = 10
     }
@@ -18,9 +18,9 @@ class DisneyCharactersMainViewModel: ObservableObject {
     @Published var favouriteCharacters: [Character] = []
     @Published var filterType: FilterType = .alphabetical
     var mainViewDidLoad = false
-    private var currentPage = 1
     
-    private let savePath = URL.documentsDirectory.appending(path: "FavouriteCharacters")
+    internal var currentPage = 1
+    internal let savePath = URL.documentsDirectory.appending(path: "FavouriteCharacters")
     private let interactor: InteractorProviding
     
     enum FilterType: String, CaseIterable {
