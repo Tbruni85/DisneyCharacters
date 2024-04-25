@@ -10,9 +10,10 @@ import SwiftUI
 struct FavouriteView: View {
     
     private struct Constants {
-        static var maxHeigth: CGFloat = 100
         
+        static var maxHeigth: CGFloat = 100
     }
+    
     @EnvironmentObject var mainViewModel: DisneyCharactersMainViewModel
     
     var body: some View {

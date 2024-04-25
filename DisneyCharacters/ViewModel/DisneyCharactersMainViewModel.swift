@@ -16,7 +16,6 @@ class DisneyCharactersMainViewModel: ObservableObject {
     
     @Published var characters: [Character] = []
     @Published var favouriteCharacters: [Character] = []
-    @Published var filterType: FilterType = .alphabetical
     var mainViewDidLoad = false
     
     internal var currentPage = 1
@@ -59,7 +58,6 @@ extension DisneyCharactersMainViewModel {
             let response: CharacterList = try await interactor.getListOfCharacters(page: currentPage, pageSize: Constants.pageSize)
             if Task.isCancelled { return }
             characters.append(contentsOf: response.data)
-            sortBy(filter: filterType)
         }
         catch {
             if Task.isCancelled {
