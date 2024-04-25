@@ -11,6 +11,7 @@ class DisneyCharactersMainViewModel: ObservableObject {
     
     private struct Constants {
         static var pageSize = 50
+        static var pageThreshold = 10
     }
     
     @Published var characters: [Character] = []
@@ -31,6 +32,26 @@ class DisneyCharactersMainViewModel: ObservableObject {
         self.interactor = interactor
     }
     
+    func sortBy(filter: FilterType) {
+        switch filter {
+        case .alphabetical:
+            characters.sort {
+                $0.name < $1.name
+            }
+        case .popularity:
+            characters.sort {
+                if  $0.films.count == $1.films.count {
+                    return $0.shortFilms.count > $1.shortFilms.count
+                }
+                return $0.films.count > $1.films.count
+            }
+        }
+    }
+}
+
+// MARK: Fetch data
+extension DisneyCharactersMainViewModel {
+    
     @MainActor
     func getListOfCharacters() async throws {
         
@@ -49,29 +70,8 @@ class DisneyCharactersMainViewModel: ObservableObject {
         }
     }
     
-    func sortBy(filter: FilterType) {
-        switch filter {
-        case .alphabetical:
-            characters.sort {
-                $0.name < $1.name
-            }
-        case .popularity:
-            characters.sort {
-                if  $0.films.count == $1.films.count {
-                    return $0.shortFilms.count > $1.shortFilms.count
-                }
-                return $0.films.count > $1.films.count
-            }
-        }
-    }
-}
-
-// MARK: Pagination Logic
-extension DisneyCharactersMainViewModel {
-    
-    @MainActor
     func requestMoreCharacters(_ element: Character) async {
-        if element._id == characters[characters.count - 20]._id {
+        if element._id == characters[characters.count - Constants.pageThreshold]._id {
             currentPage += 1
             do {
                 try await getListOfCharacters()
@@ -95,6 +95,9 @@ extension DisneyCharactersMainViewModel {
     }
     
     func addToFavourite(_ character: Character) {
+        if isFavourite(character) {
+            return
+        }
         favouriteCharacters.append(character)
         save()
     }
