@@ -56,6 +56,7 @@ struct ContentView: View {
                         }
                     }
                     .listStyle(.inset)
+                    .scrollIndicators(.hidden)
                     .navigationDestination(for: Character.self) { item in
                         CharacterDetailView(character: item)
                     }

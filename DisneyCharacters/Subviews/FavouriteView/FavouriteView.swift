@@ -32,6 +32,7 @@ struct FavouriteView: View {
                 }
             }
             .scrollClipDisabled()
+            .scrollIndicators(.hidden)
         }
         .frame(maxHeight: Constants.maxHeigth)
         .padding(.horizontal)
