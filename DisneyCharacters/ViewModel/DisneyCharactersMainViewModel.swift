@@ -53,32 +53,32 @@ extension DisneyCharactersMainViewModel {
     
     func getListOfCharacters() async throws {
         
+        if Task.isCancelled { return }
+        
         do {
             let response: CharacterList = try await interactor.getListOfCharacters(page: currentPage, pageSize: Constants.pageSize)
-            if Task.isCancelled { return }
             await MainActor.run {
                 characters.append(contentsOf: response.data)
             }
         }
         catch {
-            if Task.isCancelled {
                 print(error.localizedDescription)
-                currentPage -= 1
-                return
-            }
+            currentPage -= 1
         }
     }
     
     func requestMoreCharacters(_ element: Character) async {
+        
+        if Task.isCancelled { return }
+        
         if element._id == characters[characters.count - Constants.pageThreshold]._id {
             currentPage += 1
             do {
                 try await getListOfCharacters()
-                if Task.isCancelled { return }
+                
             }
             catch {
                 print(error.localizedDescription)
-                if Task.isCancelled { return }
             }
         }
     }
