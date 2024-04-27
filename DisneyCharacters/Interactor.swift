@@ -6,38 +6,33 @@
 //
 
 import Foundation
+import Combine
 
 enum RequestHandlerError: Error {
     case malformedURL
 }
 
 public protocol InteractorProviding {
-    func getListOfCharacters<T : Decodable>(page: Int, pageSize: Int) async throws -> T
+    func getGenericData<T: Decodable>(page: Int, pageSize: Int) async throws -> AnyPublisher<T, Error> where T: Decodable
 }
 
 class Interactor: InteractorProviding {
     
+    private var cancellable: AnyCancellable?
+    
     private struct Constants {
         static var baseUrl = "https://api.disneyapi.dev/character"
     }
-    
-    func getListOfCharacters<T : Decodable>(page: Int, pageSize: Int = 60) async throws -> T {
         
+    func getGenericData<T>(page: Int, pageSize: Int) async throws -> AnyPublisher<T, any Error> where T : Decodable {
         guard let url = URL(string: Constants.baseUrl + "?page=\(page)&pageSize=\(pageSize)") else {
             throw RequestHandlerError.malformedURL
         }
         print(url)
-        let (data, _) = try await URLSession.shared.data(from: url)
-        
-        do {
-            let decoder = JSONDecoder()
-            decoder.keyDecodingStrategy = .convertFromSnakeCase
-            let charaterList = try decoder.decode(T.self, from: data)
-            
-            return charaterList
-        }
-        catch {
-            throw error
-        }
+        return URLSession.shared.dataTaskPublisher(for: url)
+            .tryMap { $0.data }
+            .receive(on: RunLoop.main)
+            .decode(type: T.self, decoder: JSONDecoder())
+            .eraseToAnyPublisher()
     }
 }

@@ -6,6 +6,7 @@
 //
 
 import Foundation
+import Combine
 
 class DisneyCharactersMainViewModel: ObservableObject {
     
@@ -21,6 +22,8 @@ class DisneyCharactersMainViewModel: ObservableObject {
     internal var currentPage = 1
     internal let savePath = URL.documentsDirectory.appending(path: "FavouriteCharacters")
     private let interactor: InteractorProviding
+    private var store = Set<AnyCancellable>()
+    private var characterListEnded: Bool = false
     
     enum FilterType: String, CaseIterable {
         case alphabetical
@@ -53,23 +56,32 @@ extension DisneyCharactersMainViewModel {
     
     func getListOfCharacters() async throws {
         
-        if Task.isCancelled { return }
-        
+        guard !characterListEnded else {
+            print("no more characters to fetch")
+            return 
+        }
+    
         do {
-            let response: CharacterList = try await interactor.getListOfCharacters(page: currentPage, pageSize: Constants.pageSize)
-            await MainActor.run {
-                characters.append(contentsOf: response.data)
-            }
+            
+            let publisher: AnyPublisher<CharacterList, Error> = try await interactor.getGenericData(page: currentPage, pageSize: Constants.pageSize)
+            publisher
+                .sink(receiveCompletion: { _ in },
+                      receiveValue: { [weak self] newList in
+                    guard let self = self else { return }
+                    self.characters.append(contentsOf: newList.data)
+                    if newList.data.count < Constants.pageSize {
+                        self.characterListEnded = true
+                    }
+                })
+                .store(in: &store)
         }
         catch {
-                print(error.localizedDescription)
+            print(error.localizedDescription)
             currentPage -= 1
         }
     }
     
     func requestMoreCharacters(_ element: Character) async {
-        
-        if Task.isCancelled { return }
         
         if element._id == characters[characters.count - Constants.pageThreshold]._id {
             currentPage += 1

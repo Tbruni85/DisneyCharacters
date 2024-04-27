@@ -99,9 +99,17 @@ final class DisneyCharactersTests: XCTestCase {
     }
     
     func test_fetch_data_success() async throws {
+        let expectation = XCTestExpectation(description: "timeout")
         
-        try await viewModel.getListOfCharacters()
-        XCTAssertTrue(viewModel.characters.count > 0)
+        let task = Task {
+            try await viewModel.getListOfCharacters()
+        
+            expectation.fulfill()
+        }
+        
+        await fulfillment(of: [expectation], timeout: 10)
+        XCTAssertEqual(viewModel.characters.count, DisneyCharactersMainViewModel.Constants.pageSize)
+        task.cancel()
     }
     
     func test_fetch_data_failure() async throws {
@@ -111,16 +119,28 @@ final class DisneyCharactersTests: XCTestCase {
     }
     
     func test_request_more_data_success() async throws {
-    
+        
+        let expectation = XCTestExpectation(description: "timeout")
+        
         for _ in 0..<10 {
             viewModel.characters.append(MockedData.mockCharacter)
         }
         
         let elementsBeforeUpdate = viewModel.characters.count
         let currentPage = viewModel.currentPage
-        await viewModel.requestMoreCharacters(MockedData.mockCharacter)
+        
+        let task = Task {
+            await viewModel.requestMoreCharacters(MockedData.mockCharacter)
+        
+            expectation.fulfill()
+        }
+        
+        await fulfillment(of: [expectation], timeout: 10)
+        
         XCTAssertEqual(viewModel.characters.count, elementsBeforeUpdate + DisneyCharactersMainViewModel.Constants.pageSize)
         XCTAssertEqual(viewModel.currentPage, currentPage + 1)
+        
+        task.cancel()
     }
     
     func test_request_more_data_failure() async throws {
