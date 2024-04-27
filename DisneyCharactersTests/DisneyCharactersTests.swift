@@ -117,8 +117,10 @@ final class DisneyCharactersTests: XCTestCase {
         }
         
         let elementsBeforeUpdate = viewModel.characters.count
+        let currentPage = viewModel.currentPage
         await viewModel.requestMoreCharacters(MockedData.mockCharacter)
         XCTAssertEqual(viewModel.characters.count, elementsBeforeUpdate + DisneyCharactersMainViewModel.Constants.pageSize)
+        XCTAssertEqual(viewModel.currentPage, currentPage + 1)
     }
     
     func test_request_more_data_failure() async throws {

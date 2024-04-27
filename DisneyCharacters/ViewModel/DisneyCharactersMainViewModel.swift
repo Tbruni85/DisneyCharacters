@@ -51,13 +51,14 @@ class DisneyCharactersMainViewModel: ObservableObject {
 // MARK: Fetch data
 extension DisneyCharactersMainViewModel {
     
-    @MainActor
     func getListOfCharacters() async throws {
         
         do {
             let response: CharacterList = try await interactor.getListOfCharacters(page: currentPage, pageSize: Constants.pageSize)
             if Task.isCancelled { return }
-            characters.append(contentsOf: response.data)
+            await MainActor.run {
+                characters.append(contentsOf: response.data)
+            }
         }
         catch {
             if Task.isCancelled {
