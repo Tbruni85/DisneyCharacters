@@ -14,12 +14,15 @@ struct ContentView: View {
     var body: some View {
         NavigationStack {
             VStack {
-                if mainViewModel.favouriteCharacters.count > 0 {
+                if mainViewModel.hasFavourites {
                     FavouriteView()
                 }
                 
                 FilterView()
-                if mainViewModel.characters.isEmpty {
+                switch mainViewModel.viewState {
+                case .hasCharacters:
+                    CharatersListView()
+                case .noData:
                     ContentUnavailableView(label: {
                         VStack {
                             ProgressView()
@@ -27,39 +30,6 @@ struct ContentView: View {
                     }, description: {
                         Text("Fetching Disney characters")
                     })
-                    
-                } else {
-                    List {
-                        Section("Characters") {
-                            ForEach(mainViewModel.characters, id:\._id) { character in
-                                NavigationLink(value: character) {
-                                    CharacterRowView(character: character)
-                                        .task {
-                                            await mainViewModel.requestMoreCharacters(character)
-                                        }
-                                }
-                                .swipeActions(edge: .trailing, allowsFullSwipe: true) {
-                                    if mainViewModel.isFavourite(character) {
-                                        Button("Remove from Favourites") {
-                                            mainViewModel.removeFromFavourite(character)
-                                        }
-                                        .tint(.red)
-                                    } else {
-                                        Button("Add to Favourites") {
-                                            mainViewModel.addToFavourite(character)
-                                        }
-                                        .tint(.yellow)
-                                    }
-                                }
-                            }
-                            
-                        }
-                    }
-                    .listStyle(.inset)
-                    .scrollIndicators(.hidden)
-                    .navigationDestination(for: Character.self) { item in
-                        CharacterDetailView(character: item)
-                    }
                 }
             }
             .navigationTitle("Disney characters")
@@ -82,4 +52,43 @@ struct ContentView: View {
 #Preview {
     ContentView()
         .environmentObject(DisneyCharactersMainViewModel())
+}
+
+
+struct CharatersListView: View {
+    
+    @EnvironmentObject var mainViewModel: DisneyCharactersMainViewModel
+    
+    var body: some View {
+        List {
+            Section("Characters") {
+                ForEach(mainViewModel.characters, id:\._id) { character in
+                    NavigationLink(value: character) {
+                        CharacterRowView(character: character)
+                            .task {
+                                await mainViewModel.requestMoreCharacters(character)
+                            }
+                    }
+                    .swipeActions(edge: .trailing, allowsFullSwipe: true) {
+                        if mainViewModel.isFavourite(character) {
+                            Button("Remove from Favourites") {
+                                mainViewModel.removeFromFavourite(character)
+                            }
+                            .tint(.red)
+                        } else {
+                            Button("Add to Favourites") {
+                                mainViewModel.addToFavourite(character)
+                            }
+                            .tint(.yellow)
+                        }
+                    }
+                }
+            }
+        }
+        .listStyle(.inset)
+        .scrollIndicators(.hidden)
+        .navigationDestination(for: Character.self) { item in
+            CharacterDetailView(character: item)
+        }
+    }
 }

@@ -10,20 +10,28 @@ import Combine
 
 class DisneyCharactersMainViewModel: ObservableObject {
     
-    internal struct Constants {
+    struct Constants {
         static var pageSize = 50
         static var pageThreshold = 10
     }
     
+    enum State {
+        case hasCharacters
+        case noData
+    }
+    
     @Published var characters: [Character] = []
     @Published var favouriteCharacters: [Character] = []
+    @Published var hasFavourites: Bool = false
+    @Published var viewState: State = .noData
     var mainViewDidLoad = false
     
-    internal var currentPage = 1
-    internal let savePath = URL.documentsDirectory.appending(path: "FavouriteCharacters")
+    var currentPage = 1
+    let savePath = URL.documentsDirectory.appending(path: "FavouriteCharacters")
     private let interactor: InteractorProviding
     private var store = Set<AnyCancellable>()
     private var characterListEnded: Bool = false
+    private let urlFactory = URLFactory()
     
     enum FilterType: String, CaseIterable {
         case alphabetical
@@ -63,12 +71,17 @@ extension DisneyCharactersMainViewModel {
     
         do {
             
-            let publisher: AnyPublisher<CharacterList, Error> = try await interactor.getGenericData(page: currentPage, pageSize: Constants.pageSize)
+            let url = try urlFactory.generateUrlFor(url: .disneyCharacters(pageSize: Constants.pageSize, page: currentPage))
+            
+            let publisher: AnyPublisher<CharacterList, Error> = try await interactor.getGenericData(url: url,
+                                                                                                    page: currentPage,
+                                                                                                    pageSize: Constants.pageSize)
             publisher
                 .sink(receiveCompletion: { _ in },
                       receiveValue: { [weak self] newList in
                     guard let self = self else { return }
                     self.characters.append(contentsOf: newList.data)
+                    self.viewState = .hasCharacters
                     if newList.data.count < Constants.pageSize {
                         self.characterListEnded = true
                     }
@@ -87,7 +100,6 @@ extension DisneyCharactersMainViewModel {
             currentPage += 1
             do {
                 try await getListOfCharacters()
-                
             }
             catch {
                 print(error.localizedDescription)
@@ -138,6 +150,7 @@ extension DisneyCharactersMainViewModel {
         do {
             let data = try Data(contentsOf: savePath)
             favouriteCharacters = try JSONDecoder().decode([Character].self, from: data)
+            hasFavourites = favouriteCharacters.count > 0 ? true : false
         } catch {
             print("Error reading file: \(error)")
         }

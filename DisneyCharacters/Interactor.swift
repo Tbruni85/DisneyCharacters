@@ -13,21 +13,14 @@ enum RequestHandlerError: Error {
 }
 
 public protocol InteractorProviding {
-    func getGenericData<T: Decodable>(page: Int, pageSize: Int) async throws -> AnyPublisher<T, Error> where T: Decodable
+    func getGenericData<T: Decodable>(url: URL, page: Int, pageSize: Int) async throws -> AnyPublisher<T, Error> where T: Decodable
 }
 
 class Interactor: InteractorProviding {
     
     private var cancellable: AnyCancellable?
     
-    private struct Constants {
-        static var baseUrl = "https://api.disneyapi.dev/character"
-    }
-        
-    func getGenericData<T>(page: Int, pageSize: Int) async throws -> AnyPublisher<T, any Error> where T : Decodable {
-        guard let url = URL(string: Constants.baseUrl + "?page=\(page)&pageSize=\(pageSize)") else {
-            throw RequestHandlerError.malformedURL
-        }
+    func getGenericData<T>(url: URL, page: Int, pageSize: Int) async throws -> AnyPublisher<T, any Error> where T : Decodable {
         print(url)
         return URLSession.shared.dataTaskPublisher(for: url)
             .tryMap { $0.data }
