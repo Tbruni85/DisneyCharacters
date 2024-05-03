@@ -7,6 +7,7 @@
 
 import Foundation
 import Combine
+import SwiftUI
 
 class DisneyCharactersMainViewModel: ObservableObject {
     
@@ -24,6 +25,7 @@ class DisneyCharactersMainViewModel: ObservableObject {
     private let interactor: InteractorProviding
     private var store = Set<AnyCancellable>()
     private var characterListEnded: Bool = false
+    private let coordinator = Coordinator()
     
     enum FilterType: String, CaseIterable {
         case alphabetical
@@ -141,5 +143,12 @@ extension DisneyCharactersMainViewModel {
         } catch {
             print("Error reading file: \(error)")
         }
+    }
+}
+
+extension DisneyCharactersMainViewModel {
+    
+    func goTo(route: Coordinator.Routes) -> some View {
+        coordinator.goTo(route: route)
     }
 }
