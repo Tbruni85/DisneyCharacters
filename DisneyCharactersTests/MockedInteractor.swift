@@ -14,9 +14,7 @@ enum TestErrorType: Error {
 }
 
 class MockedInteractor: InteractorProviding {
-    var failResponse = false
-    
-    func getGenericData<T>(page: Int, pageSize: Int) async throws -> AnyPublisher<T, any Error> where T : Decodable {
+    func getGenericData<T>(url: URL, page: Int, pageSize: Int) async throws -> AnyPublisher<T, any Error> where T : Decodable {
         if failResponse {
             throw TestErrorType.failedResponse
         }
@@ -27,6 +25,8 @@ class MockedInteractor: InteractorProviding {
             .setFailureType(to: (any Error).self)
             .eraseToAnyPublisher()
     }
+    
+    var failResponse = false
     
 //    func getListOfCharacters<T>(page: Int, pageSize: Int) async throws -> T where T : Decodable {
 //        

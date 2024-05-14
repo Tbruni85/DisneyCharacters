@@ -23,6 +23,7 @@
 		407765092BD9453C00E0020E /* RemoteImage.swift in Sources */ = {isa = PBXBuildFile; fileRef = 407765082BD9453C00E0020E /* RemoteImage.swift */; };
 		4077650D2BD9AB1A00E0020E /* CharacterDetailView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4077650C2BD9AB1A00E0020E /* CharacterDetailView.swift */; };
 		4087A9AD2BE4EBAA00BCFA5B /* Coordinator.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4087A9AC2BE4EBAA00BCFA5B /* Coordinator.swift */; };
+		4087A9AF2BE4F71000BCFA5B /* URLFactory.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4087A9AE2BE4F71000BCFA5B /* URLFactory.swift */; };
 		40EE35BD2BD9C3F800CA4A5B /* MockedData.swift in Sources */ = {isa = PBXBuildFile; fileRef = 40EE35BC2BD9C3F800CA4A5B /* MockedData.swift */; };
 		40EE35BF2BD9C4F700CA4A5B /* mocked_response.json in Resources */ = {isa = PBXBuildFile; fileRef = 40EE35BE2BD9C4F700CA4A5B /* mocked_response.json */; };
 		40EE35C12BD9C7E700CA4A5B /* MockedInteractor.swift in Sources */ = {isa = PBXBuildFile; fileRef = 40EE35C02BD9C7E700CA4A5B /* MockedInteractor.swift */; };
@@ -59,6 +60,7 @@
 		407765082BD9453C00E0020E /* RemoteImage.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RemoteImage.swift; sourceTree = "<group>"; };
 		4077650C2BD9AB1A00E0020E /* CharacterDetailView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CharacterDetailView.swift; sourceTree = "<group>"; };
 		4087A9AC2BE4EBAA00BCFA5B /* Coordinator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Coordinator.swift; sourceTree = "<group>"; };
+		4087A9AE2BE4F71000BCFA5B /* URLFactory.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = URLFactory.swift; sourceTree = "<group>"; };
 		40EE35BC2BD9C3F800CA4A5B /* MockedData.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MockedData.swift; sourceTree = "<group>"; };
 		40EE35BE2BD9C4F700CA4A5B /* mocked_response.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = mocked_response.json; sourceTree = "<group>"; };
 		40EE35C02BD9C7E700CA4A5B /* MockedInteractor.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MockedInteractor.swift; sourceTree = "<group>"; };
@@ -109,6 +111,7 @@
 				40422EA62BD9088800EE9B37 /* ContentView.swift */,
 				40422ED12BD90B6C00EE9B37 /* Interactor.swift */,
 				4087A9AC2BE4EBAA00BCFA5B /* Coordinator.swift */,
+				4087A9AE2BE4F71000BCFA5B /* URLFactory.swift */,
 				4077650A2BD9A9F900E0020E /* ViewModel */,
 				4077650B2BD9AA0900E0020E /* Subviews */,
 				40422EA82BD9088900EE9B37 /* Assets.xcassets */,
@@ -297,6 +300,7 @@
 				4077650D2BD9AB1A00E0020E /* CharacterDetailView.swift in Sources */,
 				4087A9AD2BE4EBAA00BCFA5B /* Coordinator.swift in Sources */,
 				4042E13C2BD9202C002462D3 /* WebView.swift in Sources */,
+				4087A9AF2BE4F71000BCFA5B /* URLFactory.swift in Sources */,
 				407765062BD944D600E0020E /* FavouriteView.swift in Sources */,
 				406A6B1B2BDA61B300580964 /* FilterView.swift in Sources */,
 				40422ED42BD90FD800EE9B37 /* DisneyCharactersMainViewModel.swift in Sources */,
