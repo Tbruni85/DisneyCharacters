@@ -30,6 +30,14 @@ struct ContentView: View {
                     }, description: {
                         Text("Fetching Disney characters")
                     })
+                case .errorData:
+                    ContentUnavailableView(label: {
+                        VStack {
+                            Text("Message")
+                        }
+                    }, description: {
+                        Text("Something went wrong fetching data")
+                    })
                 }
             }
             .navigationTitle("Disney characters")

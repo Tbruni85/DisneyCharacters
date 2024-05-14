@@ -19,6 +19,7 @@ class DisneyCharactersMainViewModel: ObservableObject {
     enum State {
         case hasCharacters
         case noData
+        case errorData
     }
     
     @Published var characters: [Character] = []
@@ -79,14 +80,23 @@ extension DisneyCharactersMainViewModel {
                                                                                                     page: currentPage,
                                                                                                     pageSize: Constants.pageSize)
             publisher
-                .sink(receiveCompletion: { _ in },
+                .sink(receiveCompletion: { [weak self] result in
+                    guard let self = self else { return }
+                    switch result {
+                    case .finished:
+                        print("request completed")
+                    case .failure(let error):
+                        print("request failed with error: \(error)")
+                        self.viewState = .errorData
+                    }
+                },
                       receiveValue: { [weak self] newList in
                     guard let self = self else { return }
-                    self.characters.append(contentsOf: newList.data)
-                    self.viewState = .hasCharacters
-                    if newList.data.count < Constants.pageSize {
-                        self.characterListEnded = true
-                    }
+                        self.characters.append(contentsOf: newList.data)
+                        self.viewState = .hasCharacters
+                        if newList.data.count < Constants.pageSize {
+                            self.characterListEnded = true
+                        }
                 })
                 .store(in: &store)
         }

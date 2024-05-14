@@ -23,7 +23,14 @@ class Interactor: InteractorProviding {
     func getGenericData<T>(url: URL, page: Int, pageSize: Int) async throws -> AnyPublisher<T, any Error> where T : Decodable {
         print(url)
         return URLSession.shared.dataTaskPublisher(for: url)
-            .tryMap { $0.data }
+            .tryMap { 
+                guard let response = $0.response as? HTTPURLResponse,
+                      (200...299).contains(response.statusCode) else {
+                    throw URLError(.badServerResponse)
+                }
+                
+                return $0.data
+            }
             .receive(on: RunLoop.main)
             .decode(type: T.self, decoder: JSONDecoder())
             .eraseToAnyPublisher()
