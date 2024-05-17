@@ -34,9 +34,13 @@ struct Character: Codable, Hashable {
                                    allies: [],
                                    enemies: [],
                                    sourceUrl: "https://disney.fandom.com/wiki/Achilles_(Hercules)")
-    #endif
+#endif
 }
 
 struct CharacterList: Codable {
     let data: [Character]
+    
+#if DEBUG
+    static let example = Bundle.main.decode([Character].self, from: "characters_mock.json")
+#endif
 }

@@ -7,6 +7,8 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		40209B422BF7664800BB0FE5 /* characters_mock.json in Resources */ = {isa = PBXBuildFile; fileRef = 40209B412BF7664800BB0FE5 /* characters_mock.json */; };
+		40209B442BF7666300BB0FE5 /* CharatersListView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 40209B432BF7666300BB0FE5 /* CharatersListView.swift */; };
 		40422EA52BD9088800EE9B37 /* DisneyCharactersApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = 40422EA42BD9088800EE9B37 /* DisneyCharactersApp.swift */; };
 		40422EA72BD9088800EE9B37 /* ContentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 40422EA62BD9088800EE9B37 /* ContentView.swift */; };
 		40422EA92BD9088900EE9B37 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 40422EA82BD9088900EE9B37 /* Assets.xcassets */; };
@@ -18,6 +20,7 @@
 		4042E1382BD91315002462D3 /* CharacterRowView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4042E1372BD91315002462D3 /* CharacterRowView.swift */; };
 		4042E13C2BD9202C002462D3 /* WebView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4042E13B2BD9202C002462D3 /* WebView.swift */; };
 		4042E13F2BD93F3B002462D3 /* DetailViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4042E13E2BD93F3B002462D3 /* DetailViewModel.swift */; };
+		404E2DE22BF76713001C2D59 /* Helper.swift in Sources */ = {isa = PBXBuildFile; fileRef = 404E2DE12BF76713001C2D59 /* Helper.swift */; };
 		406A6B1B2BDA61B300580964 /* FilterView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 406A6B1A2BDA61B300580964 /* FilterView.swift */; };
 		407765062BD944D600E0020E /* FavouriteView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 407765052BD944D600E0020E /* FavouriteView.swift */; };
 		407765092BD9453C00E0020E /* RemoteImage.swift in Sources */ = {isa = PBXBuildFile; fileRef = 407765082BD9453C00E0020E /* RemoteImage.swift */; };
@@ -42,6 +45,8 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
+		40209B412BF7664800BB0FE5 /* characters_mock.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = characters_mock.json; sourceTree = "<group>"; };
+		40209B432BF7666300BB0FE5 /* CharatersListView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CharatersListView.swift; sourceTree = "<group>"; };
 		40422EA12BD9088800EE9B37 /* DisneyCharacters.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = DisneyCharacters.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		40422EA42BD9088800EE9B37 /* DisneyCharactersApp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DisneyCharactersApp.swift; sourceTree = "<group>"; };
 		40422EA62BD9088800EE9B37 /* ContentView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ContentView.swift; sourceTree = "<group>"; };
@@ -55,6 +60,7 @@
 		4042E1372BD91315002462D3 /* CharacterRowView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CharacterRowView.swift; sourceTree = "<group>"; };
 		4042E13B2BD9202C002462D3 /* WebView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WebView.swift; sourceTree = "<group>"; };
 		4042E13E2BD93F3B002462D3 /* DetailViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DetailViewModel.swift; sourceTree = "<group>"; };
+		404E2DE12BF76713001C2D59 /* Helper.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Helper.swift; sourceTree = "<group>"; };
 		406A6B1A2BDA61B300580964 /* FilterView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FilterView.swift; sourceTree = "<group>"; };
 		407765052BD944D600E0020E /* FavouriteView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FavouriteView.swift; sourceTree = "<group>"; };
 		407765082BD9453C00E0020E /* RemoteImage.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RemoteImage.swift; sourceTree = "<group>"; };
@@ -106,14 +112,15 @@
 		40422EA32BD9088800EE9B37 /* DisneyCharacters */ = {
 			isa = PBXGroup;
 			children = (
+				40209B412BF7664800BB0FE5 /* characters_mock.json */,
+				404E2DE12BF76713001C2D59 /* Helper.swift */,
 				40422ECE2BD90A8B00EE9B37 /* Models */,
 				40422EA42BD9088800EE9B37 /* DisneyCharactersApp.swift */,
 				40422EA62BD9088800EE9B37 /* ContentView.swift */,
-				40422ED12BD90B6C00EE9B37 /* Interactor.swift */,
-				4087A9AC2BE4EBAA00BCFA5B /* Coordinator.swift */,
-				4087A9AE2BE4F71000BCFA5B /* URLFactory.swift */,
-				4077650A2BD9A9F900E0020E /* ViewModel */,
 				4077650B2BD9AA0900E0020E /* Subviews */,
+				40D1E5FA2BF775BE005C5D6E /* Networking */,
+				40D1E5FB2BF775CE005C5D6E /* Routing */,
+				4077650A2BD9A9F900E0020E /* ViewModel */,
 				40422EA82BD9088900EE9B37 /* Assets.xcassets */,
 				40422EAA2BD9088900EE9B37 /* Preview Content */,
 			);
@@ -184,6 +191,7 @@
 		4077650B2BD9AA0900E0020E /* Subviews */ = {
 			isa = PBXGroup;
 			children = (
+				40209B432BF7666300BB0FE5 /* CharatersListView.swift */,
 				4042E13B2BD9202C002462D3 /* WebView.swift */,
 				407765082BD9453C00E0020E /* RemoteImage.swift */,
 				407765072BD9452200E0020E /* FavouriteView */,
@@ -192,6 +200,23 @@
 				406A6B1A2BDA61B300580964 /* FilterView.swift */,
 			);
 			path = Subviews;
+			sourceTree = "<group>";
+		};
+		40D1E5FA2BF775BE005C5D6E /* Networking */ = {
+			isa = PBXGroup;
+			children = (
+				4087A9AE2BE4F71000BCFA5B /* URLFactory.swift */,
+				40422ED12BD90B6C00EE9B37 /* Interactor.swift */,
+			);
+			path = Networking;
+			sourceTree = "<group>";
+		};
+		40D1E5FB2BF775CE005C5D6E /* Routing */ = {
+			isa = PBXGroup;
+			children = (
+				4087A9AC2BE4EBAA00BCFA5B /* Coordinator.swift */,
+			);
+			path = Routing;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -276,6 +301,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				40EE35C42BD9CB8100CA4A5B /* mocked_response.json in Resources */,
+				40209B422BF7664800BB0FE5 /* characters_mock.json in Resources */,
 				40422EAC2BD9088900EE9B37 /* Preview Assets.xcassets in Resources */,
 				40422EA92BD9088900EE9B37 /* Assets.xcassets in Resources */,
 			);
@@ -303,11 +329,13 @@
 				4087A9AF2BE4F71000BCFA5B /* URLFactory.swift in Sources */,
 				407765062BD944D600E0020E /* FavouriteView.swift in Sources */,
 				406A6B1B2BDA61B300580964 /* FilterView.swift in Sources */,
+				404E2DE22BF76713001C2D59 /* Helper.swift in Sources */,
 				40422ED42BD90FD800EE9B37 /* DisneyCharactersMainViewModel.swift in Sources */,
 				407765092BD9453C00E0020E /* RemoteImage.swift in Sources */,
 				40422EA72BD9088800EE9B37 /* ContentView.swift in Sources */,
 				4042E13F2BD93F3B002462D3 /* DetailViewModel.swift in Sources */,
 				4042E1382BD91315002462D3 /* CharacterRowView.swift in Sources */,
+				40209B442BF7666300BB0FE5 /* CharatersListView.swift in Sources */,
 				40422ED22BD90B6C00EE9B37 /* Interactor.swift in Sources */,
 				40422EA52BD9088800EE9B37 /* DisneyCharactersApp.swift in Sources */,
 			);
